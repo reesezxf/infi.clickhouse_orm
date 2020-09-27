@@ -374,6 +374,9 @@ class Database(object):
         params.update(self.settings)
         if self.db_exists:
             params['database'] = self.db_name
+        if self.request_session.auth:
+            params['user'] = self.request_session.auth[0]
+            params['password'] = self.request_session.auth[1]
         # Send the readonly flag, unless the connection is already readonly (to prevent db error)
         if self.readonly and not self.connection_readonly:
             params['readonly'] = '1'
